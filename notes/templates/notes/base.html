@@ -1,0 +1,67 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="rus">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    {% block title %} {% endblock %}
+    <!-- timer -->
+    <script src="/static/front/js/timer.js" defer></script>
+    <!--navbar-menu-->
+    <script src="/static/front/js/navbar-menu.js" defer></script>
+    <!-- table -->
+    <script src="/static/front/js/app.js" defer></script>
+    <!-- sort-->
+    <script src="/static/front/js/sort.js" defer></script>
+
+    {% block modal-css %} {% endblock %}
+
+</head>
+<body>
+    <nav class="navbar">
+    <div class="conteiner">
+        <a href="{% url 'notes:workspace' %}"><img class="calendar-icon" src="/static/front/img/calendar-icon.png"></a>
+
+        <div class="timer">
+            <H2 class="timer-date" id="timer-date">01.01.2024 Monday</H2>
+            <H1 class="timer-time" id="timer-time">12:00:00</H1>
+        </div>
+
+        <div class="navbar-user">
+            <ul class="navbar-nav">
+                <li class="navbar-item1">
+                    <a class="user-a" href="{% if user.is_authenticated %}{% url 'users:profile' %}{% else %}{% url 'users:login' %}{% endif %}">
+                        {% if user.is_authenticated %}
+                            {{ user.username }}
+                        {% else %}
+                            welcome, guest!
+                        {% endif %}
+
+                    </a>
+                </li>
+                <li class="navbar-item2">
+                    <a href="{% if user.is_authenticated %}{% url 'users:profile' %}{% else %}{% url 'users:login' %}{% endif %}"><img class="user-icon" src="/static/front/img/user-icon.png"></a>
+                </li>
+                {% if user.is_authenticated %}
+                <li class="navbar-item3">
+                    <button class="nav-menu-btn" id="nav-menu-btn"></button>
+                    <ul class="nav-menu-ul" id="nav-menu-ul">
+                        <li class="menu-btn"><a href="{% url 'users:profile'  %}">profile</a></li>
+                        {% if user.is_superuser or user.is_staff %}
+                            <li class="menu-btn" style="border-bottom: solid 1px black;"><a href="http://localhost:8000/admin/login/?next=/admin/">Admin panel</a></li>
+                        {% endif %}
+                        <li class="menu-btn" style="border-radius: 0 0 5px 5px;"><a href="{% url 'users:logout' %}">log out</a></li>
+                    </ul>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>
+
+{% block content %} {% endblock %}
+    {% block css %} {% endblock %}
+</body>
+</html>

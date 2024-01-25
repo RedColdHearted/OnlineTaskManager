@@ -1,0 +1,58 @@
+{% extends 'users/base.html' %}
+{% load static %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'front/css/login.css'%}">
+{% endblock %}
+
+
+
+{% block title %}
+    <title>Login</title>
+{% endblock %}
+
+{% block content %}
+     {% if messages or  form.non_field_errors %}
+         <div class="{% if messages %}alert-success{% else %}alert-warning{% endif %}" id="alert">
+        <strong></strong>
+             {% if messages %}
+                 {% for message in messages %}
+                    {{ message }}
+                 {% endfor %}
+             {% else %}
+                 {{ form.non_field_errors }}
+             {% endif %}
+        <button class="{% if messages %}close-success{% else %}close-warning{% endif %}" id="close"></button>
+    </div>
+
+
+     {% endif %}
+	<div class="conteiner">
+        <a href="#" class="back" id="link-back"></a>
+        <header class="conteiner-header">
+            <h3 class="header-text">Log in</h3>
+        </header>
+
+        <div class="conteiner-body">
+            <form action="{% url 'users:login' %}" method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                <label for="{{ form.username.id_for_label }}">User name</label>
+                {{ form.username }}
+            </div>
+            <div class="form-group">
+                <label for="{{ form.password.id_for_label }}">Password</label>
+                {{ form.password }}
+            </div>
+            <div class="bottom-form-group">
+                <a href="#" class="forgot-pass">Forgot password?</a>
+                <input class="log-in-submit" type="submit" value="log in">
+            </div>
+            </form>
+        </div>
+
+        <div class="conteiner-footer">
+            <a href="{% url 'users:register' %}" class="reg-a">Registration</a>
+        </div>
+   </div>
+{% endblock %}

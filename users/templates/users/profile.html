@@ -1,0 +1,45 @@
+{% extends 'notes/base.html' %}
+{% load static %}
+
+{% block title %} <title>Profile</title> {% endblock %}
+{% block css %}
+    <link rel="stylesheet" href="/static/front/css/profile.css"> 
+    <link rel="stylesheet" href="/static/front/css/normalize.css">
+{% endblock %}
+
+{% block content %}
+    <main>
+    <h1>Profile</h1>
+    <div class="pfp-div">
+        <img class="pfp" src="{% if user.image %}
+                            {{ user.image.url }}
+                        {% else %}
+                            {% static 'front/img/defaul-pfp.png' %}
+                        {% endif %}">
+    </div>
+    <form action="{% url 'users:profile' %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="info">
+        
+            <div class="form-group">
+                <label for="{{ form.username.id_for_label }}">User name</label>
+                {{ form.username }}
+            </div>
+            <div class="form-group">
+                <label for="{{ form.username.id_for_label }}">e-mail adress</label>
+                {{ form.email }}
+            </div>
+            
+        </div>
+        <div class="pic-input-div">
+            {{ form.image }}
+        </div>
+        <div class="form-footer">
+            <input class="save" type="submit" value="save">
+        </div>
+    </form>
+    </main>
+{% endblock %}
+
+</body>
+</html>

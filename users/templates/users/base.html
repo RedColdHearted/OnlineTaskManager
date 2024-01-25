@@ -1,0 +1,19 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="rus">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <script src="/static/front/js/back.js" defer></script>
+    <script src="/static/front/js/close.js" defer></script>
+    {% block title %} {% endblock %}
+
+</head>
+<body>
+   {% block content%} {% endblock %}
+{% block css %} {% endblock %}
+</body>
+</html>

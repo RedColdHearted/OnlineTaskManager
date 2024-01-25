@@ -1,0 +1,67 @@
+{% extends 'notes/base.html' %}
+{% load static %}
+
+{% block title %}<title>workspace</title>{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" href="/static/front/css/workspace.css">
+{% endblock %}
+
+{% block modal-css %}
+    <link rel="stylesheet" href="/static/front/css/normalize.css">
+    <link rel="stylesheet" href="/static/front/css/modal.css">
+    <script defer src="/static/front/js/modal.js"></script>
+{% endblock %}
+
+{% block content %} 
+
+
+<main>
+    <section class="options-container">
+        <p>...</p>
+    </section>
+
+    <div class="workspace">
+        <nav class="table-nav">
+            <ul class="sort-menu">
+                <li>
+                    <button class="workspace-button" 
+                    id="sort">
+                    sort by<img id="sort-pic" class="workspace-settings-icon"        src="/static/front/img/settings-icon.png"></button>
+                    <ul class="sort-sub"  id="sort-window">
+                        <li><button class="sort-btn" id="sort-name">name</button></li>
+                        <li><button class="sort-btn" id="sort-date">date</button></li>
+                        <li><button class="sort-btn" id="sort-size">size</button></li>
+                    </ul>
+                </li>
+
+            </ul>
+            <button class="workspace-button" id="open-modal-btn" style="margin-left: 16px;">
+                create note <img class="pen-icon" src="/static/front/img/pen-icon.png">
+            </button>
+        </nav>
+        <div class="workspace-table" id="table">
+            
+        </div>
+    </div>
+</main>
+
+<div class="modal" id="my-modal1">
+    <div class="modal__box">
+        <button class="modal__close-btn" id="close-my-modal-btn">
+            <svg width="23" height="25" viewBox="0 0 23 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M2.09082 0.03125L22.9999 22.0294L20.909 24.2292L-8.73579e-05 2.23106L2.09082 0.03125Z"
+                    fill="#333333" />
+                <path d="M0 22.0295L20.9091 0.0314368L23 2.23125L2.09091 24.2294L0 22.0295Z" fill="#333333" />
+            </svg>
+        </button>
+        <h2>Create note</h2>
+
+        <p><input class="input-note" type="text" placeholder="input note name"  maxlength="16" id="note-name"/></p>
+
+        <p><input class="input-note" type="text" placeholder="input note description" maxlength="240" id="note-description"/></p>
+
+        <button class="model-save-button" id="create-note-btn">save</button>
+    </div>
+</div>  
+{% endblock %}

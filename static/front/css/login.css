@@ -1,0 +1,178 @@
+body{
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    color: #3C3C3C;
+    margin: 0;
+    background-color: rgba(128, 168, 209, 0.801);
+}
+
+.alert-warning{
+    background-color: #fff3cd;
+    margin:4% auto;
+    max-width: 20%;
+    min-width: 300px;
+    height: 100px;
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.119);
+    padding: 10px;
+    display: flex;
+    color: #856404;
+    transition: 0.15s ease-in-out;
+}
+
+.alert-success{
+    background-color: #d4edda;
+    margin:4% auto;
+    max-width: 20%;
+    min-width: 300px;
+    height: 100px;
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.119);
+    padding: 10px;
+    display: flex;
+    color: #155724;
+    transition: 0.15s ease-in-out;
+}
+
+.close-warning{
+    display: block;
+    margin-left: auto;
+    height: 32px;
+    width: 32px;
+    background-image: url('cross-icon-brown.png');
+    background-repeat: no-repeat;
+    background-position: 55% 50% ;
+    Background-size: 55%;
+    border: none;
+    background-color: #fff3cd;
+    transition: 0.15s ease-in-out;
+}
+
+.close-success{
+    display: block;
+    margin-left: auto;
+    height: 32px;
+    width: 32px;
+    background-image: url('cross-icon-green.png');
+    background-repeat: no-repeat;
+    background-position: 55% 50% ;
+    Background-size: 55%;
+    border: none;
+    background-color: #d4edda;
+    transition: 0.15s ease-in-out;
+}
+
+.close:hover{
+    cursor: pointer;
+}
+
+.conteiner{
+    padding-top: 1px;
+    border-radius: 8px;
+    margin:8% auto;
+    max-width: 25%;
+    min-width: 350px;
+    height: 455px;
+    background-color: white;
+    box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.119);
+
+}
+
+.back{
+    /* сверху | справа | снизу | слева */
+    margin: 15px 0 0 20px;
+    display: block;
+    height: 32px;
+    width: 32px;
+    background-image: url('pointer-left.png');
+    background-repeat: no-repeat;
+    background-position: 55% 50% ;
+    Background-size: 100%;
+    border: solid 1px rgba(56, 56, 56, 0.582);
+    border-radius: 5px;
+    transition: border-color 0.3s;
+}
+
+.back:hover{
+    cursor: pointer;
+    border-color: rgb(128, 169, 209);
+}
+
+.conteiner-header{
+    text-align: center;
+    /* Сверху | Справа | Снизу | Слева */
+    padding: 0 20px 20px 20px;
+    border-bottom: solid 1px gray;
+    
+}
+
+.header-text{
+    /* сверху | справа | снизу | слева */
+    margin: 0 0 10px 0;
+}
+
+.conteiner-body{
+    padding: 20px;
+    border-bottom: 1px solid gray;
+}
+
+.form-group{
+    display: flex;
+    flex-direction: column;
+    word-break: break-word;
+    margin-bottom: 30px;
+}
+
+label{
+    margin-bottom: 5px;
+}
+
+.text-input{
+    height: 40px;
+    font-size: 1rem;
+    padding-left: 10px;
+    border: solid 1px rgba(56, 56, 56, 0.582);
+    border-radius: 5px;
+}
+
+.bottom-form-group{
+    width: 100%;
+    display: flex;
+    flex-wrap: nowrap;
+    margin-top: 40px;
+}
+
+.forgot-pass{
+    flex-shrink: 0;
+}
+
+.log-in-submit{
+    background-color: black;
+    color: white;
+    width: 150px;
+    height: 30px;
+    border: 3px solid black;
+    border-radius: 8px;
+    margin-left: auto;
+    font-size: 1rem;
+    flex-shrink: 0;
+    transition: border-color 0.2s;
+}
+
+.log-in-submit:hover{
+    cursor: pointer;
+    border: 3px solid rgb(128, 169, 209);
+}
+
+.conteiner-footer{
+    text-align: center;
+    margin-top: 22px;
+}
+
+a{
+    color: black;
+    text-decoration: none;
+}
+
+a:hover{
+    text-decoration: underline;
+}
