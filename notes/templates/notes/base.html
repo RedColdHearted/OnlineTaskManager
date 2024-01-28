@@ -50,7 +50,7 @@
                     <ul class="nav-menu-ul" id="nav-menu-ul">
                         <li class="menu-btn"><a href="{% url 'users:profile'  %}">profile</a></li>
                         {% if user.is_superuser or user.is_staff %}
-                            <li class="menu-btn" style="border-bottom: solid 1px black;"><a href="http://localhost:8000/admin/login/?next=/admin/">Admin panel</a></li>
+                            <li class="menu-btn" style="border-bottom: solid 1px black;"><a href="{% url 'admin:index' %}">Admin panel</a></li>
                         {% endif %}
                         <li class="menu-btn" style="border-radius: 0 0 5px 5px;"><a href="{% url 'users:logout' %}">log out</a></li>
                     </ul>

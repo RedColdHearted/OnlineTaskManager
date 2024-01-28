@@ -5,6 +5,6 @@ from django.db import models
 class Note(models.Model):
     title = models.CharField(max_length=17)
     description = models.TextField(null=True, blank=True)
-    created_at = models.DateTimeField(auto_now_add=False)
+    created_at = models.DateField(auto_now_add=False)
     completed = models.BooleanField(default=False)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
