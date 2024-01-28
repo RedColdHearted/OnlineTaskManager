@@ -1,8 +1,5 @@
-from django.forms import model_to_dict
 from django.shortcuts import render, redirect
-from django.views.generic import TemplateView
 
-from rest_framework import generics
 from .serializers import NoteSerializer
 
 from rest_framework.response import Response
@@ -28,8 +25,6 @@ class NotesAPIView(APIView):
         if lst:
             return Response(lst)
         return Response({"error": "Objects does not exist"})
-
-
 
     def post(self, request):
         serializer = NoteSerializer(data=request.data)
@@ -70,8 +65,6 @@ class NotesAPIView(APIView):
             obj_del.delete()
         except:
             return Response({"error": "Object does not exist"})
-
-
 
         return Response({"note": f'note {pk} deleted'})
 

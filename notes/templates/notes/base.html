@@ -35,6 +35,7 @@
                     <a class="user-a" href="{% if user.is_authenticated %}{% url 'users:profile' %}{% else %}{% url 'users:login' %}{% endif %}">
                         {% if user.is_authenticated %}
                             {{ user.username }}
+                            <p style="display: none" id="userId">{{ user.id }}</p>
                         {% else %}
                             welcome, guest!
                         {% endif %}

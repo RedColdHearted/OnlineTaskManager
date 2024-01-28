@@ -1,24 +1,25 @@
+const userId = document.getElementById('userId').textContent;
 
+function fetchApiDatGet(){
+    fetch('http://localhost:8000/api/v1/noteslist/' + userId + '/')
+        .then(response => response.json())
+        .then(data => {
+            for(let i = 0; i < data.length; i++){
+                console.log(data[i])
+                notes.push(data[i])
+            }
+            render()
+            console.log(notes)
+            })
+        .catch(error => {
+            console.error('Ошибка при получении данных:', error);
+        });
+}
+
+fetchApiDatGet()
 
 const notes = [
-    {
-    title: 'сделать дз',
-    description: 'сдать задание до пятницы ',
-    date : '18.01.2024',
-    completed : true
-    },
-    {
-    title: 'полить цветы',
-    description: 'Лейка стоит на подоконнике',
-    date : '14.02.2024',
-    completed : false
-    },
-    {
-    title: 'купить продукты',
-    description: 'нужны батон, сыр, молоко, помидоры, огурцы, яйца',
-    date : '19.01.2024',
-    completed : false
-    },
+
 ]
 
 //sort
@@ -35,7 +36,8 @@ const saveBtn = document.getElementById('create-note-btn');
 const listElement = document.getElementById('table');
 
 function getNoteTemplate(note, index){
-
+    let Tstrs = note.created_at.split('-');
+    let Tdate = Tstrs[2] + '.' + Tstrs[1] + '.' + Tstrs[0];
 
 return  `
 <div class="task-card-${note.completed ? 'warning': 'normal'}"">
@@ -48,7 +50,7 @@ return  `
             
             <div class="task-buttom">
                 <h5 class="task-date">
-                   created ${note.date}
+                   created ${Tdate}
                 </h5>
                 <div class="btn-container">
                     <button class="button-${note.completed ? 'warning': 'success'}" data-index="${index}" data-type="toggle"></button>
@@ -69,7 +71,7 @@ for(let i = 0; i < notes.length; i++){
 }
 }
 
-render()
+
 
 //name sort
 sortNameBtn.onclick = function sortedRender(){
@@ -88,8 +90,8 @@ else{
 
 //date sort
 function compareDates(a, b) {
-const dateA = new Date(a.date.split('.').reverse().join('-'));
-const dateB = new Date(b.date.split('.').reverse().join('-'));
+const dateA = new Date(a.created_at);
+const dateB = new Date(b.created_at);
 return dateA - dateB;
 }
 
@@ -97,7 +99,7 @@ sortDateBtn.onclick = function (){
 if (notes.length > 0) {
 listElement.innerHTML = ''
     const sorted = notes.slice().sort(compareDates);
-    console.log(sorted);
+    console.log(notes);
     for (let c = 0; c < notes.length; c++ ){
         listElement.insertAdjacentHTML('beforeend', getNoteTemplate(sorted[c], c))
     }
@@ -139,14 +141,15 @@ let day = currentDate.getDate().toString().padStart(2, '0');
 let month = (currentDate.getMonth() + 1).toString().padStart(2,'0');
 let year = currentDate.getFullYear().toString();
 
-let formattedDate = day + '.' + month + '.' + year;
+let formattedDate = year + '.' + month + '.' + day;
 console.log(formattedDate)
 
 const newNote = {
     title: name !==''? name : 'task' + (notes.length + 1),
     description: noteDscrptElement.value !==''? noteDscrptElement.value : 'empty',
     date : formattedDate,
-    completed : false
+    completed : false,
+    user_id: userId,
 }
 if (notes.length < 12){
     notes.push(newNote)
