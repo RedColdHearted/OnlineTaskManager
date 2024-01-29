@@ -4,9 +4,10 @@ function fetchApiDatGet(){
     fetch('http://localhost:8000/api/v1/noteslist/' + userId + '/')
         .then(response => response.json())
         .then(data => {
+            notes.length= 0
             for(let i = 0; i < data.length; i++){
-                console.log(data[i])
                 notes.push(data[i])
+                console.log(data[i])
             }
             render()
             })
@@ -42,7 +43,6 @@ fetch('http://localhost:8000/api/v1/noteslist', {
 })
   .then(response => response.json())
   .then(data => {
-    console.log('data:', data);
   })
   .catch((error) => {
     console.error('Error:', error);
@@ -52,7 +52,6 @@ fetch('http://localhost:8000/api/v1/noteslist', {
 
 
 fetchApiDatGet()
-
 const notes = [
 
 ]
@@ -194,10 +193,11 @@ if (notes.length < 12){
         body: JSON.stringify(newNote)
     };
     fetchApiPost(requestOptions, newNote)
-    notes.push(newNote)
-    console.log(newNote, requestOptions)
-
-    render()} else {
+      setTimeout(function() {
+    fetchApiDatGet()}, 10);
+    //console.log(newNote, requestOptions)
+    console.log(notes)
+    } else {
     alert('Max amount of notes!')
 }
 
