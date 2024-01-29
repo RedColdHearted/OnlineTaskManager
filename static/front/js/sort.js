@@ -6,7 +6,6 @@ document.getElementById('sort').addEventListener('click', function() {
     opacity: 1;
     transform: rotateX(0deg);
     `
-    console.log('working')
   });
 
 document.addEventListener('click', function(event) {
@@ -14,7 +13,6 @@ document.addEventListener('click', function(event) {
     var openButton = document.getElementById('sort');
     var pic = document.getElementById('sort-pic');
     if (event.target != window && event.target != openButton && event.target != pic) {
-        console.log('window closed')
         window.style.cssText = "visibility: hidden"; // Закрываем окно по клику на другой элемент
     }
   });

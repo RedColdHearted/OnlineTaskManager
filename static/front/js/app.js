@@ -9,12 +9,47 @@ function fetchApiDatGet(){
                 notes.push(data[i])
             }
             render()
-            console.log(notes)
             })
         .catch(error => {
             console.error('Ошибка при получении данных:', error);
         });
 }
+
+function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
+function fetchApiPost(param, data){
+    var csrftoken = getCookie('csrftoken');
+fetch('http://localhost:8000/api/v1/noteslist', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+    'X-CSRFToken': csrftoken
+  },
+  body: JSON.stringify(data),
+})
+  .then(response => response.json())
+  .then(data => {
+    console.log('data:', data);
+  })
+  .catch((error) => {
+    console.error('Error:', error);
+  });
+
+}
+
 
 fetchApiDatGet()
 
@@ -78,7 +113,6 @@ sortNameBtn.onclick = function sortedRender(){
 if (notes.length > 0) {
 listElement.innerHTML = ''
     const sorted = notes.sort((a, b) => a.title.localeCompare(b.title));
-    console.log(sorted);
     for (let c = 0; c < notes.length; c++ ){
         listElement.insertAdjacentHTML('beforeend', getNoteTemplate(sorted[c], c))
     }
@@ -99,7 +133,6 @@ sortDateBtn.onclick = function (){
 if (notes.length > 0) {
 listElement.innerHTML = ''
     const sorted = notes.slice().sort(compareDates);
-    console.log(notes);
     for (let c = 0; c < notes.length; c++ ){
         listElement.insertAdjacentHTML('beforeend', getNoteTemplate(sorted[c], c))
     }
@@ -120,7 +153,6 @@ sortSizeBtn.onclick = function (){
 if (notes.length > 0) {
     listElement.innerHTML = ''
     const sorted = notes.slice().sort(compareDescriptionLength);
-    console.log(sorted);
     for (let c = 0; c < notes.length; c++ ){
         listElement.insertAdjacentHTML('beforeend', getNoteTemplate(sorted[c], c))
     }
@@ -130,10 +162,9 @@ else{
 } 
 }
 
-
+//note create
 saveBtn.onclick = function(){
 const name = noteNameElement.value
-console.log(name)
 
 //date
 let currentDate = new Date();
@@ -141,20 +172,32 @@ let day = currentDate.getDate().toString().padStart(2, '0');
 let month = (currentDate.getMonth() + 1).toString().padStart(2,'0');
 let year = currentDate.getFullYear().toString();
 
-let formattedDate = year + '.' + month + '.' + day;
-console.log(formattedDate)
+let formattedDate = year + '-' + month + '-' + day;
 
 const newNote = {
     title: name !==''? name : 'task' + (notes.length + 1),
     description: noteDscrptElement.value !==''? noteDscrptElement.value : 'empty',
-    date : formattedDate,
+    created_at : formattedDate,
     completed : false,
-    user_id: userId,
+    user_id: Number(userId),
 }
 if (notes.length < 12){
+    //post request
+    const requestOptions = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Connection': 'keep-alive',
+            'Accept-Encoding': 'gzip, deflate, br',
+            'Accept': '*/*',
+        },
+        body: JSON.stringify(newNote)
+    };
+    fetchApiPost(requestOptions, newNote)
     notes.push(newNote)
-    render()
-} else {
+    console.log(newNote, requestOptions)
+
+    render()} else {
     alert('Max amount of notes!')
 }
 
@@ -165,18 +208,17 @@ noteDscrptElement.value = ''
 
 
 listElement.onclick = function(event){
-console.log(event.target.dataset)
+//console.log(event.target.dataset)
 if (event.target.dataset.index){
     const index = event.target.dataset.index
     const type = event.target.dataset.type
     if (type === 'toggle'){
-        console.log('toggle', index)
+        //console.log('toggle', index)
         notes[index].completed = !notes[index].completed
         
     } else if (type === 'remove'){
-        console.log('remove', index)
+        //console.log('remove', index)
         notes.splice(index, 1)
     }
     render()
-}
-}
+}}

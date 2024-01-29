@@ -9,5 +9,3 @@ setInterval(function() {
     timerDate.textContent = `${now.toLocaleDateString()} ${daysOfWeek[now.getDay()]}`
     timerTime.textContent = now.toLocaleTimeString()
 }, 1000)
-
-console.log()
