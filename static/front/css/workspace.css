@@ -123,10 +123,6 @@ body{
     background-color: rgba(99, 119, 192, 0.8);
 }
 
-.nav-menu-btn:hover{
-    cursor: pointer;
-}
-
 .user-a {
     line-height: 65px;
     margin-top: 5px;
@@ -260,7 +256,6 @@ main{
     margin-top: 20px;
     vertical-align:middle;
     box-shadow: 10px 5px 5px rgba(187, 186, 186, 0.402);
-
 }
 
 .task-name{
@@ -280,7 +275,6 @@ main{
     overflow-wrap: break-word;
     overflow-y: auto;
 }
-
 
 .task-date{
     width: 30%;
@@ -346,11 +340,9 @@ main{
     box-shadow: 2px 2px 3px rgba(142, 142, 142, 0.777);
 }
 
-.button-danger, .button-warning, .button-success:hover{
+.button-danger, .button-warning, .button-success, .model-save-button, .nav-menu-btn:hover{
     cursor: pointer;
 }
-
-
 
 .options-container{
     background-color: orange;
@@ -374,10 +366,6 @@ main{
     background-color: lightgreen;
     border-radius: 5px;
     border: none;
-}
-
-.model-save-button:hover {
-    cursor: pointer;
 }
 
 .calendar-icon {
@@ -444,8 +432,6 @@ main{
 .workspace-table::-webkit-scrollbar-thumb:hover {
     background: #707070;
 }
-
-
 
 @media (max-width: 1238px) {
     .options-container {
