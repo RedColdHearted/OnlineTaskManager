@@ -1,21 +1,5 @@
 const userId = document.getElementById('userId').textContent;
 
-function fetchApiDatGet(url){
-    fetch(url + userId + '/')
-        .then(response => response.json())
-        .then(data => {
-            notes.length= 0
-            for(let i = 0; i < data.length; i++){
-                notes.push(data[i])
-                console.log(data[i])
-            }
-            render()
-            })
-        .catch(error => {
-            console.error('Ошибка при получении данных:', error);
-        });
-}
-
 function getCookie(name) {
     var cookieValue = null;
     if (document.cookie && document.cookie !== '') {
@@ -31,7 +15,23 @@ function getCookie(name) {
     return cookieValue;
 }
 
-function fetchApiPost(url, param, data){
+function fetchApiDatGet(url){
+    fetch(url + userId + '/')
+        .then(response => response.json())
+        .then(data => {
+            notes.length = 0
+            for(let i = 0; i < data.length; i++){
+                notes.push(data[i])
+                console.log(data[i])
+            }
+            render()
+            })
+        .catch(error => {
+            console.error('Ошибка при получении данных:', error);
+        });
+}
+
+function fetchApiPost(url, data){
     var token = getCookie('csrftoken');
 fetch(url, {
   method: 'POST',
@@ -47,7 +47,41 @@ fetch(url, {
   .catch((error) => {
     console.error('Error:', error);
   });
+}
 
+function fetchApiDelete(url, noteId){
+    var token = getCookie('csrftoken');
+fetch(url + noteId + '/', {
+  method: 'DELETE',
+  headers: {
+    'Content-Type': 'application/json',
+    'X-CSRFToken': token
+  }
+})
+  .then(response => response.json())
+//  .then(data => {
+//  })
+  .catch((error) => {
+    console.error('Error:', error);
+  });
+}
+
+function fetchApiPut(url, noteId, data){
+    var token = getCookie('csrftoken');
+fetch(url + noteId + '/', {
+  method: 'PUT',
+  headers: {
+    'Content-Type': 'application/json',
+    'X-CSRFToken': token
+  },
+  body: JSON.stringify(data),
+})
+  .then(response => response.json())
+  .then(data => {
+  })
+  .catch((error) => {
+    console.error('Error:', error);
+  });
 }
 
 
@@ -87,8 +121,8 @@ return  `
                    created ${Tdate}
                 </h5>
                 <div class="btn-container">
-                    <button class="button-${note.completed ? 'warning': 'success'}" data-index="${index}" data-type="toggle"></button>
-                    <button class="button-danger" data-index="${index}" data-type="remove"></button>
+                    <button class="button-${note.completed ? 'warning': 'success'}" data-index="${note.id}" data-type="toggle"></button>
+                    <button class="button-danger" data-index="${note.id}" data-type="remove"></button>
                 </div>
             </div>
         </div>
@@ -181,17 +215,7 @@ const newNote = {
 }
 if (notes.length < 12){
     //post request
-    const requestOptions = {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'Connection': 'keep-alive',
-            'Accept-Encoding': 'gzip, deflate, br',
-            'Accept': '*/*',
-        },
-        body: JSON.stringify(newNote)
-    };
-    fetchApiPost('http://localhost:8000/api/v1/noteslist/', requestOptions, newNote)
+    fetchApiPost('http://localhost:8000/api/v1/noteslist/', newNote)
       setTimeout(function() {
     fetchApiDatGet('http://localhost:8000/api/v1/noteslist/')}, 10);
     //console.log(newNote, requestOptions)
@@ -204,8 +228,6 @@ noteNameElement.value = ''
 noteDscrptElement.value = ''
 }
 
-
-
 listElement.onclick = function(event){
 //console.log(event.target.dataset)
 if (event.target.dataset.index){
@@ -213,11 +235,24 @@ if (event.target.dataset.index){
     const type = event.target.dataset.type
     if (type === 'toggle'){
         //console.log('toggle', index)
-        notes[index].completed = !notes[index].completed
+        let note = notes.find(note => note.id === Number(index))
+        console.log(note)
+        let data = {
+            "title": note.title,
+            "description": note.description,
+            "created_at": note.created_at,
+            "completed": !note.completed,
+            "user_id": userId
+        }
+        fetchApiPut('http://localhost:8000/api/v1/noteslist/', note.id, data);
+         setTimeout(function() {
+         fetchApiDatGet('http://localhost:8000/api/v1/noteslist/')}, 50);
         
     } else if (type === 'remove'){
-        //console.log('remove', index)
-        notes.splice(index, 1)
+        //console.log('remove', 'http://localhost:8000/api/v1/noteslist/' + index)
+         fetchApiDelete('http://localhost:8000/api/v1/noteslist/', index);
+         setTimeout(function() {
+         fetchApiDatGet('http://localhost:8000/api/v1/noteslist/')}, 10);
     }
     render()
 }}

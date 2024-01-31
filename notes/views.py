@@ -44,9 +44,9 @@ class NotesAPIView(APIView):
         if not pk:
             return Response({"error": "Method PUT not allowed"})
         try:
-            instance = Note.objects.get(pk=pk)
-        except:
-            return Response({"error": "Object does not exist"})
+            instance = Note.objects.get(id=pk)
+        except Exception as exp:
+            return Response({"error": str(exp)})
 
         serializer = NoteSerializer(data=request.data, instance=instance)
         serializer.user = User(id=request.data['user_id'])
@@ -63,8 +63,9 @@ class NotesAPIView(APIView):
         try:
             obj_del = Note.objects.get(pk=pk)
             obj_del.delete()
-        except:
-            return Response({"error": "Object does not exist"})
+        except Exception as exp:
+            return Response({"error": str(exp)})
+            #return Response({"error": "Object does not exist"})
 
         return Response({"note": f'note {pk} deleted'})
 
