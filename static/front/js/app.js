@@ -1,7 +1,7 @@
 const userId = document.getElementById('userId').textContent;
 
-function fetchApiDatGet(){
-    fetch('http://localhost:8000/api/v1/noteslist/' + userId + '/')
+function fetchApiDatGet(url){
+    fetch(url + userId + '/')
         .then(response => response.json())
         .then(data => {
             notes.length= 0
@@ -31,13 +31,13 @@ function getCookie(name) {
     return cookieValue;
 }
 
-function fetchApiPost(param, data){
-    var csrftoken = getCookie('csrftoken');
-fetch('http://localhost:8000/api/v1/noteslist', {
+function fetchApiPost(url, param, data){
+    var token = getCookie('csrftoken');
+fetch(url, {
   method: 'POST',
   headers: {
     'Content-Type': 'application/json',
-    'X-CSRFToken': csrftoken
+    'X-CSRFToken': token
   },
   body: JSON.stringify(data),
 })
@@ -51,7 +51,7 @@ fetch('http://localhost:8000/api/v1/noteslist', {
 }
 
 
-fetchApiDatGet()
+fetchApiDatGet('http://localhost:8000/api/v1/noteslist/')
 const notes = [
 
 ]
@@ -138,8 +138,7 @@ listElement.innerHTML = ''
 }
 else{
     alert('you got 0 notes!')
-}
-}
+}}
 
 //size sort
 function compareDescriptionLength(a, b) {
@@ -192,9 +191,9 @@ if (notes.length < 12){
         },
         body: JSON.stringify(newNote)
     };
-    fetchApiPost(requestOptions, newNote)
+    fetchApiPost('http://localhost:8000/api/v1/noteslist/', requestOptions, newNote)
       setTimeout(function() {
-    fetchApiDatGet()}, 10);
+    fetchApiDatGet('http://localhost:8000/api/v1/noteslist/')}, 10);
     //console.log(newNote, requestOptions)
     console.log(notes)
     } else {
