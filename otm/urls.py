@@ -15,6 +15,7 @@ urlpatterns = [
     path('', workspace_redirect, name='workspace_redirect'),
     path('notes/', include('notes.urls', namespace='notes')),
     path('users/', include('users.urls', namespace='users')),
+
     path('api/v1/noteslist/', NotesAPIView.as_view()),
     path('api/v1/noteslist/<int:pk>/', NotesAPIView.as_view()),
 ]

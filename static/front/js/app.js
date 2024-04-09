@@ -236,7 +236,7 @@ if (event.target.dataset.index){
     if (type === 'toggle'){
         //console.log('toggle', index)
         let note = notes.find(note => note.id === Number(index))
-        console.log(note)
+        //console.log(note)
         let data = {
             "title": note.title,
             "description": note.description,
