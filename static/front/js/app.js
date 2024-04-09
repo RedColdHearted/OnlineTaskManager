@@ -16,7 +16,9 @@ function getCookie(name) {
 }
 
 function fetchApiDatGet(url){
-    fetch(url + userId + '/')
+    fetch(url + userId + '/', {
+        mode: 'no-cors'
+      })
         .then(response => response.json())
         .then(data => {
             notes.length = 0
@@ -40,6 +42,7 @@ fetch(url, {
     'X-CSRFToken': token
   },
   body: JSON.stringify(data),
+  mode: 'no-cors'
 })
   .then(response => response.json())
   .then(data => {
@@ -52,11 +55,13 @@ fetch(url, {
 function fetchApiDelete(url, noteId){
     var token = getCookie('csrftoken');
 fetch(url + noteId + '/', {
+    
   method: 'DELETE',
   headers: {
     'Content-Type': 'application/json',
     'X-CSRFToken': token
-  }
+  },
+  mode: 'no-cors'
 })
   .then(response => response.json())
 //  .then(data => {
