@@ -15,10 +15,8 @@ function getCookie(name) {
     return cookieValue;
 }
 
-function fetchApiDatGet(url){
-    fetch(url + userId + '/', {
-        mode: 'no-cors'
-      })
+function fetchApiDataGet(url){
+    fetch(url + userId + '/')
         .then(response => response.json())
         .then(data => {
             notes.length = 0
@@ -41,8 +39,7 @@ fetch(url, {
     'Content-Type': 'application/json',
     'X-CSRFToken': token
   },
-  body: JSON.stringify(data),
-  mode: 'no-cors'
+  body: JSON.stringify(data)
 })
   .then(response => response.json())
   .then(data => {
@@ -60,8 +57,7 @@ fetch(url + noteId + '/', {
   headers: {
     'Content-Type': 'application/json',
     'X-CSRFToken': token
-  },
-  mode: 'no-cors'
+  }
 })
   .then(response => response.json())
 //  .then(data => {
@@ -90,7 +86,7 @@ fetch(url + noteId + '/', {
 }
 
 
-fetchApiDatGet('http://localhost:8000/api/v1/noteslist/')
+fetchApiDataGet('http://localhost:8000/api/v1/noteslist/')
 const notes = [
 
 ]
@@ -222,7 +218,7 @@ if (notes.length < 12){
     //post request
     fetchApiPost('http://localhost:8000/api/v1/noteslist/', newNote)
       setTimeout(function() {
-    fetchApiDatGet('http://localhost:8000/api/v1/noteslist/')}, 10);
+    fetchApiDataGet('http://localhost:8000/api/v1/noteslist/')}, 10);
     //console.log(newNote, requestOptions)
     console.log(notes)
     } else {
@@ -251,13 +247,13 @@ if (event.target.dataset.index){
         }
         fetchApiPut('http://localhost:8000/api/v1/noteslist/', note.id, data);
          setTimeout(function() {
-         fetchApiDatGet('http://localhost:8000/api/v1/noteslist/')}, 50);
+         fetchApiDataGet('http://localhost:8000/api/v1/noteslist/')}, 50);
         
     } else if (type === 'remove'){
         //console.log('remove', 'http://localhost:8000/api/v1/noteslist/' + index)
          fetchApiDelete('http://localhost:8000/api/v1/noteslist/', index);
          setTimeout(function() {
-         fetchApiDatGet('http://localhost:8000/api/v1/noteslist/')}, 10);
+         fetchApiDataGet('http://localhost:8000/api/v1/noteslist/')}, 10);
     }
     render()
 }}
